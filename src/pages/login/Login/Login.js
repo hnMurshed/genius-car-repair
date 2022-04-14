@@ -17,13 +17,20 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     const {loginWithEmailPassword} = useFirebase();
-    const [user] = useAuthState(auth);
+    const [user, loading, error] = useAuthState(auth);
 
     useEffect( () => {
         if (user) {
             navigate(from, '/home');
         }
     }, [user])
+
+    let errorElement;
+    if (error) {
+        errorElement = <div>
+            <p>{error.message}</p>
+        </div>
+    }
 
     const handleLoginOnSubmit = e => {
         e.preventDefault();
@@ -45,6 +52,7 @@ const Login = () => {
                 <input className='submit-btn text-white mt-4 w-100 border-0 rounded-3 py-2' type="submit" value="Login" />
             </form>
             <p>Don't have an account? <Link to='/register' className='text-decoration-none'>Please Register</Link></p>
+            {errorElement}
             <SocialButtons></SocialButtons>
         </div>
     );
