@@ -1,0 +1,22 @@
+.navbar-brand {
+    text-decoration: none;
+    color: white;
+}
+.nav-link {
+    text-decoration: none;
+    color: white;
+}
+.header-btn-container {
+    gap: 5px;
+}
+.header-btn {
+    text-decoration: none;
+    background-color: white;
+    color: rgba(0, 0, 0, 0.6);
+    padding: 7px 20px;
+    border-radius: 6px;
+}
+.user-profile {
+    width: 40px;
+    border-radius: 50%;
+}

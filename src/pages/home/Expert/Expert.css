@@ -1,0 +1,7 @@
+.expert {
+    border-radius: 8px;
+}
+.expert img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}

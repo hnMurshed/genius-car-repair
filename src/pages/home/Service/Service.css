@@ -1,0 +1,19 @@
+.service {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+.service img {
+    width: 100%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.body {
+    padding: 20px;
+}
+.body h3 {
+    margin-top: 0;
+}
+.body span {
+    font-size: 18px;
+    font-weight: bold;
+}
