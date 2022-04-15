@@ -10,11 +10,13 @@ import './Header.css';
 
 const Header = () => {
     const { signOutUser } = useFirebase();
-    const [user] = useAuthState(auth)
+    const [user] = useAuthState(auth);
+    console.log(user);
+    console.log(user?.displayName);
     return (
         <>
-            <Navbar collapseOnSelect sticky='top' expand="lg" bg="primary" variant="primary" className='header'>
-                <Container>
+            <Navbar collapseOnSelect sticky='top' expand="lg" bg="primary" variant="primary">
+                <Container className='header-container'>
                     <Navbar.Brand as={Link} to="/" className='m-0'>
                         <img className='brand-logo' src={bandLogo} alt="" />
                     </Navbar.Brand>
@@ -40,7 +42,7 @@ const Header = () => {
                             user ? <div>
                                 <span className='text-white'>{user.displayName}</span>
                                 <img className='user-profile ms-2' src={user.photoURL} alt="" />
-                            </div> : <Nav.Link as={Link} to="login">
+                            </div> : <Nav.Link as={Link} to="login" className='p-0'>
                                 Login
                             </Nav.Link>
                         }

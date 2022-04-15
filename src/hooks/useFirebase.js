@@ -6,10 +6,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 const useFirebase = () => {
 
-    const [user, setUser] = useState({});
+    let [user, setUser] = useState(null);
     const [error, setError] = useState('');
 
-    const [hookUser] = useAuthState(auth);
+    // const [hookUser, loading, error] = useAuthState(auth);
 
     // auth providers
     const googleProvider = new GoogleAuthProvider();
@@ -17,18 +17,15 @@ const useFirebase = () => {
 
     // createUserWithEmailAndPassword
     const registerWithEmailPassword = (name, email, password) => {
-        console.log('firevase error: ', error);
 
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
                 updateDisplayName(name);
                 setUser(result.user);
                 setError('')
-                console.log(result.user);
             })
             .catch(error => {
                 setError(error.message);
-                console.error(typeof error.message);
             })
 
     }
@@ -38,13 +35,12 @@ const useFirebase = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(result => {
                 setUser(result.user);
-                // navigate(from, { replace: true })
                 setError('')
             })
             .catch(error => {
                 setError(error.message);
-                console.log(error.message);
             })
+            
     }
 
     // signInWithGoogle with popup
@@ -52,12 +48,10 @@ const useFirebase = () => {
         signInWithPopup(auth, googleProvider)
             .then(result => {
                 setUser(result.user);
-                // navigate(from, { replace: true })
                 setError('')
             })
             .catch(error => {
                 setError(error.message);
-                console.error(error)
             })
     }
     // signInWithGithub with popup
@@ -65,12 +59,10 @@ const useFirebase = () => {
         signInWithPopup(auth, githubProvider)
             .then(result => {
                 setUser(result.user);
-                // navigate(from, { replace: true });
                 setError('');
             })
             .catch(error => {
                 setError(error.message);
-                console.error(error);
             })
     }
 
@@ -84,6 +76,13 @@ const useFirebase = () => {
             });
     }
 
+    // sighOut
+    const signOutUser = () => {
+        signOut(auth)
+            .then(() => {
+            });
+    }
+
     // obserbe user
     onAuthStateChanged(auth, (user, error) => {
         if (user) {
@@ -93,14 +92,6 @@ const useFirebase = () => {
             setError(error);
         }
     })
-
-    // sighOut
-    const signOutUser = () => {
-        signOut(auth)
-            .then(() => {
-                console.log('user signed out')
-            });
-    }
 
     return {
         registerWithEmailPassword,

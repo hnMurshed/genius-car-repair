@@ -1,10 +1,13 @@
-import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import auth from '../../../firebase.init';
 import useFirebase from '../../../hooks/useFirebase';
 import SocialButtons from '../SocialButtons/SocialButtons';
 // import './Register.css';
 
 const Register = () => {
+    const [isChecked, setIsChecked] = useState(false);
     /* 
     // GETTING INPUT VALUES USING state
 
@@ -38,6 +41,22 @@ const Register = () => {
         registerWithEmailPassword,
         error
     } = useFirebase();
+    const [user] = useAuthState(auth);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+            navigate('/home');
+        }
+    }, [user])
+
+    let errorElement;
+    if (error) {
+        errorElement = <div>
+            <p className='text-danger'>{error}</p>
+        </div>
+    }
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
@@ -50,8 +69,7 @@ const Register = () => {
         const email = event.target.email.value;
         const password = event.target.password.value;
         const confirmPassword = event.target.confirmPassword.value;
-        console.log(name, email, password, confirmPassword);
-        console.log('error:', error);
+        // const isChecked = event.target.terms.checked;
 
         // getting values with nameRef.current.value // useRef hook is declared avobe.
         /* const name = nameRef.current.value;
@@ -60,7 +78,9 @@ const Register = () => {
         const confirmPassword = confirmPasswordRef.current.value; */
 
         if (password !== confirmPassword) {
-            console.error('Password did not match');
+            errorElement = <div>
+                <p className='text-danger'>Password didn't match, pls try again!</p>
+            </div>
             return;
         }
         registerWithEmailPassword(name, email, password);
@@ -85,12 +105,14 @@ const Register = () => {
                     <label className='' htmlFor="conf-password">Confirm Password</label>
                     <input ref={confirmPasswordRef} className='form-control' type="password" name="confirmPassword" id="conf-password" placeholder='Confirm password' required />
                 </div>
-                <div className="error">
-                    <p className='text-danger'>{error && error}</p>
+                <div className="form-group">
+                    <input onClick={ () => setIsChecked(!isChecked)}  className={`me-2 ${isChecked ? 'text-primary' : ''}`} type="checkbox" name="terms" id="terms" />
+                    <label className={isChecked ? 'text-primary' : ''} htmlFor="terms">Accept Terms and Conditions</label>
                 </div>
-                <input className='submit-btn text-white mt-4 w-100 border-0 rounded-3 py-2' type="submit" value="Register" />
+                <input disabled={!isChecked} className='submit-btn text-white mt-4 w-100 border-0 rounded-3 py-2' type="submit" value="Register" />
             </form>
             <p>Already have an account? <Link to='/login' className='text-decoration-none'>Please Login</Link></p>
+            {errorElement}
             <SocialButtons></SocialButtons>
         </div>
     );

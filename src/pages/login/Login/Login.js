@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useAuthState, useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import useFirebase from '../../../hooks/useFirebase';
@@ -16,8 +16,10 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const {loginWithEmailPassword} = useFirebase();
-    const [user, loading, error] = useAuthState(auth);
+    const {loginWithEmailPassword, error} = useFirebase();
+
+    const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
+    const [user, loading] = useAuthState(auth);
 
     useEffect( () => {
         if (user) {
@@ -28,14 +30,18 @@ const Login = () => {
     let errorElement;
     if (error) {
         errorElement = <div>
-            <p>{error.message}</p>
+            <p className='text-danger'>{error}</p>
         </div>
+    }
+
+    const resetPassword = async () => {
+        await sendPasswordResetEmail(email);
+        alert('Reset password mail sent. Please check your inbox');
     }
 
     const handleLoginOnSubmit = e => {
         e.preventDefault();
         loginWithEmailPassword(email, password);
-        
     }
     return (
         <div className="form-container border border-2 my-5">
@@ -52,6 +58,7 @@ const Login = () => {
                 <input className='submit-btn text-white mt-4 w-100 border-0 rounded-3 py-2' type="submit" value="Login" />
             </form>
             <p>Don't have an account? <Link to='/register' className='text-decoration-none'>Please Register</Link></p>
+            <p>Forgot password? <span onClick={resetPassword} className='text-decoration-none text-primary' style={{cursor: 'pointer'}}>Reset Password</span></p>
             {errorElement}
             <SocialButtons></SocialButtons>
         </div>
