@@ -23,14 +23,18 @@ function App() {
       <Header></Header>
       <Routes>
         <Route path='/' element={
-          <RouteWithTitle title='Home'>
-            <Home></Home>
-          </RouteWithTitle>
+          <PrivatePage>
+            <RouteWithTitle title='Home'>
+              <Home></Home>
+            </RouteWithTitle>
+          </PrivatePage>
         }></Route>
         <Route path='/home' element={
-          <RouteWithTitle title='Home'>
-            <Home></Home>
-          </RouteWithTitle>
+          <PrivatePage>
+            <RouteWithTitle title='Home'>
+              <Home></Home>
+            </RouteWithTitle>
+          </PrivatePage>
         }></Route>
         <Route path='/services/:serviceId' element={
           <RouteWithTitle title='Service'>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import auth from "../firebase.init";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import toast, { Toaster } from "react-hot-toast";
 
 const useFirebase = () => {
 
@@ -23,12 +24,20 @@ const useFirebase = () => {
                 updateDisplayName(name);
                 setUser(result.user);
                 setError('')
+
+                
             })
             .catch(error => {
                 setError(error.message);
             })
-
     }
+
+    const displayToast = <div>
+        <Toaster
+            position="top-center"
+            reverseOrder={false}
+        ></Toaster>
+    </div>
 
     // signInWithEmailAndPassword
     const loginWithEmailPassword = (email, password) => {
@@ -40,7 +49,7 @@ const useFirebase = () => {
             .catch(error => {
                 setError(error.message);
             })
-            
+
     }
 
     // signInWithGoogle with popup
@@ -100,7 +109,8 @@ const useFirebase = () => {
         signInWithGithub,
         signOutUser,
         error,
-        user
+        user,
+        displayToast
     };
 }
 

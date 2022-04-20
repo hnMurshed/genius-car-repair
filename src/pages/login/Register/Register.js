@@ -1,5 +1,7 @@
+import { sendEmailVerification } from 'firebase/auth';
 import React, { useEffect, useRef, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import toast, { Toaster } from 'react-hot-toast';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import useFirebase from '../../../hooks/useFirebase';
@@ -32,7 +34,7 @@ const Register = () => {
     }
     */
 
-    
+
     /* const {setTitle} = useTitle();
     useEffect(() => {
         setTitle('Register')
@@ -46,7 +48,8 @@ const Register = () => {
 
     const {
         registerWithEmailPassword,
-        error
+        error,
+        displayToast
     } = useFirebase();
     const [user] = useAuthState(auth);
 
@@ -65,7 +68,7 @@ const Register = () => {
         </div>
     }
 
-    const handleOnSubmit = (event) => {
+    const handleOnSubmit = async (event) => {
         event.preventDefault();
 
         /*
@@ -94,6 +97,11 @@ const Register = () => {
     }
     return (
         <div className="form-container border border-2 my-5">
+            {displayToast}
+            {/* <Toaster
+                position="top-center"
+                reverseOrder={false}
+            ></Toaster> */}
             <h3 className='text-center mb-4'>Please Register!!</h3>
             <form onSubmit={handleOnSubmit}>
                 <div className="form-group">
@@ -113,7 +121,7 @@ const Register = () => {
                     <input ref={confirmPasswordRef} className='form-control' type="password" name="confirmPassword" id="conf-password" placeholder='Confirm password' required />
                 </div>
                 <div className="form-group">
-                    <input onClick={ () => setIsChecked(!isChecked)}  className={`me-2 ${isChecked ? 'text-primary' : ''}`} type="checkbox" name="terms" id="terms" />
+                    <input onClick={() => setIsChecked(!isChecked)} className={`me-2 ${isChecked ? 'text-primary' : ''}`} type="checkbox" name="terms" id="terms" />
                     <label className={isChecked ? 'text-primary' : ''} htmlFor="terms">Accept Terms and Conditions</label>
                 </div>
                 <input disabled={!isChecked} className='submit-btn text-white mt-4 w-100 border-0 rounded-3 py-2' type="submit" value="Register" />
