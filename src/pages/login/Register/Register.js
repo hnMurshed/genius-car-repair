@@ -3,6 +3,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import useFirebase from '../../../hooks/useFirebase';
+import { useTitle } from '../../shared/TitleProvider/TitleProvider';
 import SocialButtons from '../SocialButtons/SocialButtons';
 // import './Register.css';
 
@@ -30,6 +31,12 @@ const Register = () => {
         setConfirmPassword(e.target.value);
     }
     */
+
+    
+    /* const {setTitle} = useTitle();
+    useEffect(() => {
+        setTitle('Register')
+      }, []) */
 
     // useRef to get input values
     const nameRef = useRef('');

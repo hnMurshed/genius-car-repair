@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import { useTitle } from '../shared/TitleProvider/TitleProvider';
 
 const Shipment = () => {
+    /* const {setTitle} = useTitle();
+    useEffect(() => {
+        setTitle('Shipment')
+      }, []) */
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');

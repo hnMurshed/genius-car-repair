@@ -11,26 +11,60 @@ import NotFound from './pages/NotFound/NotFound';
 import ServiceDetail from './pages/home/ServiceDetail/ServiceDetail';
 import About from './pages/about/About';
 import Register from './pages/login/Register/Register';
+import { useTitle } from './pages/shared/TitleProvider/TitleProvider';
+import { useEffect } from 'react';
+import RouteWithTitle from './pages/shared/RouteWithTitle/RouteWithTitle';
 // import Register from './pages/login/Register/Register';
 
 function App() {
+
   return (
     <div>
       <Header></Header>
       <Routes>
-        <Route path='/' element={<Home></Home>}></Route>
-        <Route path='/home' element={<Home></Home>}></Route>
-        <Route path='/services/:serviceId' element={<ServiceDetail></ServiceDetail>}></Route>
-        <Route path='/about' element={<About></About>}></Route>
-        <Route path='/login' element={<Login></Login>}></Route>
-        <Route path='/register' element={<Register></Register>}></Route>
+        <Route path='/' element={
+          <RouteWithTitle title='Home'>
+            <Home></Home>
+          </RouteWithTitle>
+        }></Route>
+        <Route path='/home' element={
+          <RouteWithTitle title='Home'>
+            <Home></Home>
+          </RouteWithTitle>
+        }></Route>
+        <Route path='/services/:serviceId' element={
+          <RouteWithTitle title='Service'>
+            <ServiceDetail></ServiceDetail>
+          </RouteWithTitle>
+        }></Route>
+        <Route path='/about' element={
+          <RouteWithTitle title='About'>
+            <About></About>
+          </RouteWithTitle>
+        }></Route>
+        <Route path='/login' element={
+          <RouteWithTitle title='Login'>
+            <Login></Login>
+          </RouteWithTitle>
+        }></Route>
+        <Route path='/register' element={
+          <RouteWithTitle title='Register'>
+            <Register></Register>
+          </RouteWithTitle>
+        }></Route>
         <Route path='/shipment' element={
           <PrivatePage>
-            <Shipment></Shipment>
+            <RouteWithTitle title='Shipment'>
+              <Shipment></Shipment>
+            </RouteWithTitle>
           </PrivatePage>
         }>
         </Route>
-        <Route path='*' element={<NotFound></NotFound>}></Route>
+        <Route path='*' element={
+          <RouteWithTitle title='Page Not Found'>
+            <NotFound></NotFound>
+          </RouteWithTitle>
+        }></Route>
       </Routes>
       <Footer></Footer>
     </div>

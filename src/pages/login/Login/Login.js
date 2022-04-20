@@ -4,6 +4,7 @@ import { useAuthState, useSendPasswordResetEmail } from 'react-firebase-hooks/au
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import useFirebase from '../../../hooks/useFirebase';
+import { useTitle } from '../../shared/TitleProvider/TitleProvider';
 import SocialButtons from '../SocialButtons/SocialButtons';
 import './Login.css';
 
@@ -20,6 +21,11 @@ const Login = () => {
 
     const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
     const [user, loading] = useAuthState(auth);
+    
+    /* const {setTitle} = useTitle();
+    useEffect(() => {
+        setTitle('Login')
+      }, []) */
 
     useEffect( () => {
         if (user) {
