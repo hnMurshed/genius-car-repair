@@ -14,6 +14,8 @@ import Register from './pages/login/Register/Register';
 import { useTitle } from './pages/shared/TitleProvider/TitleProvider';
 import { useEffect } from 'react';
 import RouteWithTitle from './pages/shared/RouteWithTitle/RouteWithTitle';
+import AddService from './pages/AddService/AddService';
+import ManageService from './pages/ManageService/ManageService';
 // import Register from './pages/login/Register/Register';
 
 function App() {
@@ -23,18 +25,14 @@ function App() {
       <Header></Header>
       <Routes>
         <Route path='/' element={
-          <PrivatePage>
-            <RouteWithTitle title='Home'>
-              <Home></Home>
-            </RouteWithTitle>
-          </PrivatePage>
+          <RouteWithTitle title='Home'>
+            <Home></Home>
+          </RouteWithTitle>
         }></Route>
         <Route path='/home' element={
-          <PrivatePage>
-            <RouteWithTitle title='Home'>
-              <Home></Home>
-            </RouteWithTitle>
-          </PrivatePage>
+          <RouteWithTitle title='Home'>
+            <Home></Home>
+          </RouteWithTitle>
         }></Route>
         <Route path='/services/:serviceId' element={
           <RouteWithTitle title='Service'>
@@ -60,6 +58,22 @@ function App() {
           <PrivatePage>
             <RouteWithTitle title='Shipment'>
               <Shipment></Shipment>
+            </RouteWithTitle>
+          </PrivatePage>
+        }>
+        </Route>
+        <Route path='/add-service' element={
+          <PrivatePage>
+            <RouteWithTitle title='Add Service'>
+              <AddService></AddService>
+            </RouteWithTitle>
+          </PrivatePage>
+        }>
+        </Route>
+        <Route path='/manage-service' element={
+          <PrivatePage>
+            <RouteWithTitle title='Manage Service'>
+              <ManageService></ManageService>
             </RouteWithTitle>
           </PrivatePage>
         }>
