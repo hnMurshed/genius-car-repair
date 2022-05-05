@@ -24,7 +24,7 @@ const Order = () => {
             }
             catch (error) {
 
-                if (error.response.status === 401 || error.response.status === 403 ) {
+                if (error.response.status === 401 || error.response.status === 403) {
                     signOut(auth);
                     navigate('/login');
 
@@ -38,13 +38,23 @@ const Order = () => {
     return (
         <div className='container my-5'>
             <h2 className='text-center'>Your orders: {orders.length}</h2>
-            {
-                orders.map(order => <div className='d-flex align-items-center gx-2'>
-                    <h4>{order.name}</h4>
-                    <p>${order.email}</p>
-                </div>)
-            }
-        </div>
+            <table className='table table-striped'>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Your Booking</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        orders.map(order => <tr>
+                            <td>{order.email}</td>
+                            <td>{order.service}</td>
+                        </tr>)
+                    }
+                </tbody>
+            </table>
+        </div >
     );
 };
 
