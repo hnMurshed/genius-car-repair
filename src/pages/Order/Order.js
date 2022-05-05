@@ -10,8 +10,8 @@ import auth from '../../firebase.init';
 
 const Order = () => {
     const [orders, setOrders] = useState([]);
-    const [user] = useAuthState(auth);
-    const email = user?.email;
+    const [user, loading] = useAuthState(auth);
+    // const email = user?.email;
 
     const navigate = useNavigate();
 
@@ -19,8 +19,9 @@ const Order = () => {
 
         const loadOrder = async () => {
             try {
-                const { data } = await axiosPriate.get(`https://protected-oasis-61800.herokuapp.com/orders?email=${email}`);
+                const { data } = await axiosPriate.get(`https://protected-oasis-61800.herokuapp.com/orders?email=${user?.email}`);
                 setOrders(data);
+
             }
             catch (error) {
 
@@ -32,8 +33,17 @@ const Order = () => {
                 }
             }
         }
-        loadOrder();
+
+        if (loading) {
+            console.log('loading...');
+        }
+        else {
+            loadOrder();
+        }
+        
     }, [user]);
+
+    console.log(user?.email);
 
     return (
         <div className='container my-5'>

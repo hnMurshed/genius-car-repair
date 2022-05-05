@@ -56,6 +56,7 @@ const Shipment = () => {
         .then(res => {
             const {data} = res;
 
+            console.log(data.insertedId);
             if (data.insertedId) {
                 toast.success('Congratulations, you have successfully booked the service. Thanks')
             }

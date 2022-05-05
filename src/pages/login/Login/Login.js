@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import useFirebase from '../../../hooks/useFirebase';
+import useToken from '../../../hooks/useToken';
 import { useTitle } from '../../shared/TitleProvider/TitleProvider';
 import SocialButtons from '../SocialButtons/SocialButtons';
 import './Login.css';
@@ -19,10 +20,13 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const {loginWithEmailPassword, error} = useFirebase();
-
+    // use react firebase hooks
     const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
     const [user, loading] = useAuthState(auth);
+
+    // use custom hooks
+    const {loginWithEmailPassword, error} = useFirebase();
+    const token = useToken(user);
     
     /* const {setTitle} = useTitle();
     useEffect(() => {
@@ -30,8 +34,8 @@ const Login = () => {
       }, []) */
 
     useEffect( () => {
-        if (user) {
-            // navigate(from, '/home');
+        if (token) {
+            navigate(from, '/home');
         }
     }, [user])
 
@@ -50,10 +54,6 @@ const Login = () => {
     const handleLoginOnSubmit = async e => {
         e.preventDefault();
         await loginWithEmailPassword(email, password);
-
-        const {data} = await axios.post('https://protected-oasis-61800.herokuapp.com/login', {email});
-        localStorage.setItem('Access_Token', data);
-        navigate(from, '/home');
     }
     return (
         <div className="form-container border border-2 my-5">

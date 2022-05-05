@@ -6,10 +6,14 @@ import facebookLogo from '../../../images/icon/facebook-logo.png';
 import githubLogo from '../../../images/icon/github-logo.png';
 import { useAuthState, useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
+import useToken from '../../../hooks/useToken';
 
 const SocialButtons = () => {
     const [signInWithGithub, user, loading, error] = useSignInWithGithub(auth);
     const [signInWithGoogle, user2, loading2, error2] = useSignInWithGoogle(auth);
+
+    // use custom hooks
+    const token = useToken(user || user2);
 
     let errorElement;
     if (error || error2) {

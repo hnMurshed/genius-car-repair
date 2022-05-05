@@ -6,12 +6,15 @@ import { Navigate, useLocation } from 'react-router-dom';
 import auth from '../../../firebase.init';
 
 const PrivatePage = ({ children }) => {
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const location = useLocation();
 
     /* const [sendEmailVerification, sending, error] = useSendEmailVerification(
         auth
     ); */
+    if (loading) {
+        return <p className='text-center my-5'>Loading...</p>
+    }
 
     if (!user) {
         return <Navigate to='/login' state={{ from: location }} replace></Navigate>

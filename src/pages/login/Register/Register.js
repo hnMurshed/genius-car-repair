@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import useFirebase from '../../../hooks/useFirebase';
+import useToken from '../../../hooks/useToken';
 import { useTitle } from '../../shared/TitleProvider/TitleProvider';
 import SocialButtons from '../SocialButtons/SocialButtons';
 // import './Register.css';
@@ -46,17 +47,21 @@ const Register = () => {
     const passwordRef = useRef('');
     const confirmPasswordRef = useRef('');
 
+    // use react firebase hooks
+    const [user] = useAuthState(auth);
+
+    // use custom hooks
     const {
         registerWithEmailPassword,
         error,
         displayToast
     } = useFirebase();
-    const [user] = useAuthState(auth);
+    const token = useToken(user);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user) {
+        if (token) {
             navigate('/home');
         }
     }, [user])
