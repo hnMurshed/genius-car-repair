@@ -11,8 +11,7 @@ import './Header.css';
 const Header = () => {
     const { signOutUser } = useFirebase();
     const [user] = useAuthState(auth);
-    console.log(user);
-    console.log(user?.displayName);
+    
     return (
         <>
             <Navbar collapseOnSelect sticky='top' expand="lg" bg="primary" variant="primary">
@@ -25,13 +24,14 @@ const Header = () => {
                         <Nav className="mx-auto">
                             <Nav.Link as={Link} to="home">Home</Nav.Link>
                             <Nav.Link href="home#services">Services</Nav.Link>
+                            <Nav.Link href="home#experts">Experts</Nav.Link>
                             {
                                 user && <>
                                     <Nav.Link as={Link} to="add-service">Add Service</Nav.Link>
                                     <Nav.Link as={Link} to="manage-service">Manage Service</Nav.Link>
+                                    <Nav.Link as={Link} to="order">Order</Nav.Link>
                                 </>
                             }
-                            <Nav.Link href="home#experts">Experts</Nav.Link>
                             <Nav.Link as={Link} to="about">About</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>

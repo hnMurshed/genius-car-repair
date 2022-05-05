@@ -5,7 +5,7 @@ const ManageService = () => {
     const [services, setServices] = useServices();
 
     const handleRemove = id => {
-        const url =`http://localhost:5000/service/${id}`;
+        const url =`https://protected-oasis-61800.herokuapp.com/service/${id}`;
         fetch(url, {
             method: 'DELETE'
         })

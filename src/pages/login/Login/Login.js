@@ -1,6 +1,8 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useAuthState, useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
+import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import useFirebase from '../../../hooks/useFirebase';
@@ -29,7 +31,7 @@ const Login = () => {
 
     useEffect( () => {
         if (user) {
-            navigate(from, '/home');
+            // navigate(from, '/home');
         }
     }, [user])
 
@@ -42,12 +44,16 @@ const Login = () => {
 
     const resetPassword = async () => {
         await sendPasswordResetEmail(email);
-        alert('Reset password mail sent. Please check your inbox');
+        toast.success('Request accepted, please check your mail to reset password');
     }
 
-    const handleLoginOnSubmit = e => {
+    const handleLoginOnSubmit = async e => {
         e.preventDefault();
-        loginWithEmailPassword(email, password);
+        await loginWithEmailPassword(email, password);
+
+        const {data} = await axios.post('https://protected-oasis-61800.herokuapp.com/login', {email});
+        localStorage.setItem('Access_Token', data);
+        navigate(from, '/home');
     }
     return (
         <div className="form-container border border-2 my-5">

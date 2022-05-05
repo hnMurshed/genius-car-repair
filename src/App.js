@@ -16,12 +16,15 @@ import { useEffect } from 'react';
 import RouteWithTitle from './pages/shared/RouteWithTitle/RouteWithTitle';
 import AddService from './pages/AddService/AddService';
 import ManageService from './pages/ManageService/ManageService';
+import { Toaster } from 'react-hot-toast';
+import Order from './pages/Order/Order';
 // import Register from './pages/login/Register/Register';
 
 function App() {
 
   return (
     <div>
+      <Toaster></Toaster>
       <Header></Header>
       <Routes>
         <Route path='/' element={
@@ -54,7 +57,12 @@ function App() {
             <Register></Register>
           </RouteWithTitle>
         }></Route>
-        <Route path='/shipment' element={
+        <Route path='/order' element={
+          <RouteWithTitle title='Order'>
+            <Order></Order>
+          </RouteWithTitle>
+        }></Route>
+        <Route path='/checkout/:serviceId' element={
           <PrivatePage>
             <RouteWithTitle title='Shipment'>
               <Shipment></Shipment>

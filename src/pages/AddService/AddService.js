@@ -1,12 +1,15 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import toast, { Toaster } from 'react-hot-toast';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const AddService = () => {
     const { register, handleSubmit } = useForm();
-    const onSubmit = data => {
+    const navigate = useNavigate();
+    const onSubmit = (data, event) => {
         console.log(data);
 
-        fetch('http://localhost:5000/service', {
+        fetch('https://protected-oasis-61800.herokuapp.com/service', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -14,7 +17,13 @@ const AddService = () => {
             body: JSON.stringify(data)
         })
         .then(res => res.json())
-        .then(result => console.log('Result', result))
+        .then(result => {
+            console.log('Result', result);
+            toast.success('Service successfully added!');
+            navigate('/home');
+
+
+        })
     };
     return (
         <div className='container text-center my-5'>

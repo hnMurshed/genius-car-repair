@@ -1,16 +1,12 @@
 import { Button } from 'bootstrap';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import useServiceDetails from '../../../hooks/useServiceDetails';
 
 const ServiceDetail = () => {
-    const [service, setService] = useState({});
     const { serviceId } = useParams();
 
-    useEffect(() => {
-        fetch(`http://localhost:5000/service/${serviceId}`)
-        .then(res => res.json())
-        .then(data => setService(data))
-    }, []);
+    const [service] = useServiceDetails(serviceId);
 
     const { name, img, description, price, _id } = service;
 
@@ -26,7 +22,7 @@ const ServiceDetail = () => {
                     <del className='fs-4 ms-2'>${19+parseFloat(price)}</del>
 
                     <button className='btn btn-info w-100 mt-2'>Add to Card</button>
-                    <Link to='/shipment' className='btn btn-primary w-100 mt-2'>Confirm Booking</Link>
+                    <Link to={`/checkout/${_id}`} className='btn btn-primary w-100 mt-2'>Confirm Booking</Link>
                     <hr />
                     <h3 className='text-center'>DESCRIPTION</h3>
                     <p>{description}</p>
